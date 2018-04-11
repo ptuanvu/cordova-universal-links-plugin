@@ -18,16 +18,14 @@ module.exports = {
  * @param {Object} pluginPreferences - plugin preferences as JSON object; already parsed
  */
 function writePreferences(cordovaContext, pluginPreferences) {
-  var pathToManifest;
-  var manifestSource;
-  try {
-    pathToManifest = path.join(cordovaContext.opts.projectRoot, 'platforms', 'android', 'AndroidManifest.xml');
-    manifestSource = xmlHelper.readXmlAsJson(pathToManifest);
-  } catch (err) {
+  var pathToManifest = path.join(cordovaContext.opts.projectRoot, 'platforms', 'android', 'AndroidManifest.xml');
+  var manifestSource = xmlHelper.readXmlAsJson(pathToManifest);
+  if (!manifestSource) {
     // Cordova 8
     pathToManifest = path.join(cordovaContext.opts.projectRoot, 'platforms', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
     manifestSource = xmlHelper.readXmlAsJson(pathToManifest);
   }
+  
   var cleanManifest;
   var updatedManifest;
 
